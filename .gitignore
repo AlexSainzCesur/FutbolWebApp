@@ -1,0 +1,4 @@
+*.sws.lock
+Programs/*.exe
+Data/DfConnId.ini
+IdeSrc/Workspace.loc
