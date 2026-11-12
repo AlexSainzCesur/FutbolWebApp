@@ -2,3 +2,10 @@
 Programs/*.exe
 Data/DfConnId.ini
 IdeSrc/Workspace.loc
+*.log
+*.dep
+*.prn
+*.cch
+*.dbg
+IdeSrc/*.dsk
+IdeSrc/*.mtd
