@@ -66,6 +66,17 @@ Object oWebApp is a cWebApp
                                 Send NavigatePath
                         End_Procedure
                     End_Object
+
+                    Object oListadeentrenadoresItem1 is a cWebMenuItem
+                        Set psCaption to "Lista de entrenadores"
+
+                        WebRegisterPath ntNavigateBegin oEntrenadorSelect
+
+                        Procedure OnClick
+                            Forward Send OnClick
+                                Send NavigatePath
+                        End_Procedure
+                    End_Object
                 End_Object
 
                 Object oSignOut_itm is a cWebMenuItem
@@ -151,6 +162,8 @@ Object oWebApp is a cWebApp
     Use LigaSelect.wo
     Use EquipoZoom.wo
     Use EquipoSelect.wo
+    Use EntrenadorZoom.wo
+    Use EntrenadorSelect.wo
     Set phoDefaultView to oDashboard
     
     // Hide the header panel for users that are not logged in.
