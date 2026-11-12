@@ -7,3 +7,5 @@ IdeSrc/Workspace.loc
 *.prn
 *.cch
 *.dbg
+IdeSrc/*.dsk
+IdeSrc/*.mtd
