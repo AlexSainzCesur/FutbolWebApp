@@ -21,16 +21,28 @@ Object oEquipoSelect is a cWebView
     Set pbShowCaption to False
     Set piMaxWidth to 1024
 
+    // <-- NUEVO: "filtrar si o no"
+    { WebProperty=Server }
+    Property Boolean pbFiltrarPorLiga False
+
     Object oliga_DD is a cligaDataDictionary
     End_Object 
 
     Object oequipo_DD is a cequipoDataDictionary
-        Set DDO_Server To oliga_DD
+        Set DDO_Server to oliga_DD
+
+        // <-- NUEVO: el filtro
+        Procedure OnConstrain
+            Boolean bFiltrar
+            WebGet pbFiltrarPorLiga of oEquipoSelect to bFiltrar
+            If (bFiltrar) Begin
+                Constrain equipo Relates to liga
+            End
+        End_Procedure
     End_Object 
 
-    Set Main_DD To oequipo_DD
-    Set Server  To oequipo_DD
-
+    Set Main_DD to oequipo_DD
+    Set Server  to oequipo_DD
 
     Object oList is a cWebList
         Set piColumnSpan to 0
@@ -141,6 +153,8 @@ Error DFERR_PROGRAM "NavigateForward to this from-parent child Select view not y
     Procedure OnNavigateForward tWebNavigateData NavigateData Integer hoInvokingView Integer hoInvokingObject
         WebSet pbRender of oNewButton to True
         WebSet pbRender of oDetailButton to True
+        // <-- NUEVO: activa el filtro solo si venimos del padre (liga)
+        WebSet pbFiltrarPorLiga to (NavigateData.eNavigateType = nfFromParent)
 
         Case Begin
             Case (NavigateData.eNavigateType = nfFromParent)
@@ -163,5 +177,4 @@ Error DFERR_PROGRAM "NavigateForward to this from-parent child Select view not y
 
     End_Procedure
 
-
-End_Object 
+End_Object
