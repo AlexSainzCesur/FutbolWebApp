@@ -7,9 +7,11 @@ Use cWebPanel.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cWebForm.pkg
-Use cWebButton.pkg   // <-- NUEVO
+Use cWebList.pkg
+Use cWebColumn.pkg
 
 Use cligaDataDictionary.dd
+Use cequipoDataDictionary.dd
 
 Object oLigaZoom is a cWebView
     Set piColumnCount to 12
@@ -22,6 +24,12 @@ Object oLigaZoom is a cWebView
 
     Object oliga_DD is a cligaDataDictionary
     End_Object 
+
+    // DD de equipo, hijo de liga y restringido a la liga actual
+    Object oequipo_DD is a cequipoDataDictionary
+        Set DDO_Server to oliga_DD
+        Set Constrain_File to liga.File_Number
+    End_Object
 
     Set Main_DD to oliga_DD
     Set Server  to oliga_DD
@@ -63,17 +71,20 @@ Object oLigaZoom is a cWebView
             Set psLabel to "EquiposMax"
         End_Object 
 
-        // <-- NUEVO: boton que lleva a los equipos de esta liga (From parent)
-        Object oVerEquiposBtn is a cWebButton
-            Set psCaption to "Ver equipos"
-            Set piColumnSpan to 3
+        // Lista con los equipos de esta liga (sustituye al boton)
+        Object oEquiposList is a cWebList
+            Set Server to oequipo_DD
+            Set piColumnSpan to 12
             Set piColumnIndex to 0
+            Set pbFillHeight to False
+            Set piHeight to 200
+            Set pbShowHeader to True
 
-            WebRegisterPath ntNavigateForward oEquipoSelect
-
-            Procedure OnClick
-                Send NavigatePath
-            End_Procedure
+            Object oequipoNombre is a cWebColumn
+                Entry_Item equipo.Nombre
+                Set psCaption to "Equipos de la liga"
+                Set piWidth to 100
+            End_Object
         End_Object
     End_Object 
 
